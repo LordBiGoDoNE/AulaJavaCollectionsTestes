@@ -1,6 +1,7 @@
 package dao;
 
-import entity.Fabricante;
+import config.ConexaoConfig;
+import model.entity.Fabricante;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -15,7 +16,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                 SELECT * FROM fabricante WHERE id = %d;
                 """, id);
 
-        try (Statement stmt = Conexao.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {
                 Fabricante fabricante = new Fabricante();
                 fabricante.setId(rs.getInt("id"));
@@ -38,7 +39,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                 SELECT * FROM fabricante;
                 """;
 
-        try (Statement stmt = Conexao.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Fabricante fabricante = new Fabricante();
                 fabricante.setId(rs.getInt("id"));
@@ -67,7 +68,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                     """, entidade.getNome());
         }
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -83,7 +84,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                     """, fabricante.getNome()));
         }
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(queryBuilder.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -100,7 +101,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                         """, fabricanteAtualizar.getNome(),
                 fabricanteAtualizar.getId());
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -114,7 +115,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
                  WHERE id= %d;
                 """, id);
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);

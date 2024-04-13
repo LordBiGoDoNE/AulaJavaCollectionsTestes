@@ -1,7 +1,8 @@
 package dao;
 
 
-import entity.Modelo;
+import config.ConexaoConfig;
+import model.entity.Modelo;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -16,7 +17,7 @@ public class ModeloDAO implements BasicCrudDAO<Modelo> {
                        SELECT * FROM modelo WHERE id = %d;
                        """, id);
 
-        try (Statement stmt = Conexao.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {
                 Modelo modelo = new Modelo();
                 modelo.setId(rs.getInt("id"));
@@ -40,7 +41,7 @@ public class ModeloDAO implements BasicCrudDAO<Modelo> {
                        SELECT * FROM modelo;
                        """;
 
-        try (Statement stmt = Conexao.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Modelo modelo = new Modelo();
                 modelo.setId(rs.getInt("id"));
@@ -62,7 +63,7 @@ public class ModeloDAO implements BasicCrudDAO<Modelo> {
                        INSERT INTO modelo (nome, id_fabricante) VALUES ('%s', %d);
                        """, modelo.getNome(), modelo.getId_fabricante());
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -82,7 +83,7 @@ public class ModeloDAO implements BasicCrudDAO<Modelo> {
                 modeloAtualizar.getId_fabricante(),
                 modeloAtualizar.getId());
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -96,7 +97,7 @@ public class ModeloDAO implements BasicCrudDAO<Modelo> {
                         WHERE id= %d;
                        """, id);
 
-        try (Statement stmt = Conexao.getConn().createStatement();) {
+        try (Statement stmt = ConexaoConfig.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
